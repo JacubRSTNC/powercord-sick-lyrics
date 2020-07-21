@@ -1,6 +1,12 @@
 const { Plugin } = require('powercord/entities');
 const { get } = require('powercord/http');
-
+// Attempt to load SpotifyAPI
+let SpotifyPlayer;
+try {
+	SpotifyPlayer = require('../pc-spotify/SpotifyPlayer.js');
+} catch (e) {
+	SpotifyPlayer = null;
+}
 module.exports = class sicklyrics extends Plugin {
 	startPlugin() {
 		powercord.api.commands.registerCommand({
@@ -18,9 +24,20 @@ module.exports = class sicklyrics extends Plugin {
 				args.pop();
 				send = true;
 			}
-			const data = await get(
-				`https://lyrics-api.powercord.dev/lyrics?input=${encodeURI(args.join(' '))}`
-			).then((r) => JSON.parse(r.body.toString()));
+			let data;
+			if (SpotifyPlayer) {
+				data = await get(
+					`https://lyrics-api.powercord.dev/lyrics?input=${encodeURI(
+						args.length > 0
+							? args.join(' ')
+							: SpotifyPlayer.player.item.name + ' ' + SpotifyPlayer.player.item.artists[0].name
+					)}`
+				).then((r) => JSON.parse(r.body.toString()));
+			} else {
+				data = await get(
+					`https://lyrics-api.powercord.dev/lyrics?input=${encodeURI(args.join(' '))}`
+				).then((r) => JSON.parse(r.body.toString()));
+			}
 			if (!data.data[0].lyrics) {
 				return { send: false, result: "I wasn't able to find that song!" };
 			}
