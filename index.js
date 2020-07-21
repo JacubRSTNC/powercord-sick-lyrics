@@ -1,6 +1,5 @@
 const { Plugin } = require('powercord/entities');
 const { get } = require('powercord/http');
-
 module.exports = class sicklyrics extends Plugin {
 	startPlugin() {
 		powercord.api.commands.registerCommand({
