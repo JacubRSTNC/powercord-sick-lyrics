@@ -1,0 +1,7 @@
+{
+    "name": "SickLyrics",
+    "version": "1.0.0",
+    "description": "Finds the lyrics for the specifed song",
+    "author": "Jacub",
+    "license": "OSL-3.0"
+  }
