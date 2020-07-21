@@ -7,7 +7,7 @@ module.exports = class sicklyrics extends Plugin {
 			command: 'lyrics',
 			aliases: [ 'l', 'songtext' ],
 			description: 'Gets lyrics of the specified song',
-			usage: '{c} blah blah',
+			usage: '{c} blah blah [--send]',
 			executor: this.lyrics
 		});
 	}
