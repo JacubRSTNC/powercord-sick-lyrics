@@ -18,14 +18,14 @@ module.exports = class sicklyrics extends Plugin {
 				args.pop();
 				send = true;
 			}
-			const data = await get(
+			var data = await get(
 				`https://lyrics-api.powercord.dev/lyrics?input=${encodeURI(args.join(' '))}`
 			).then((r) => JSON.parse(r.body.toString()));
 			if (!data.data[0].lyrics) {
 				return { send: false, result: "I wasn't able to find that song!" };
 			}
-			const song = data.data[0];
-			const resultmsg = `\`\`\`${song.artist} - ${song.name}\n\n${song.lyrics}\n\nLyrics provided by KSoft | © ${song.artist} ${song.album_year}\`\`\``;
+			var song = data.data[0];
+			var resultmsg = `\`\`\`${song.artist} - ${song.name}\n\n${song.lyrics}\n\nLyrics provided by KSoft | © ${song.artist} ${song.album_year}\`\`\``;
 			if (resultmsg.length > 2000) {
 				resultmsg = song.url;
 			}
